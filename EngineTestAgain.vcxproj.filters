@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Framework">
+      <UniqueIdentifier>{69283de3-f5ff-4e84-a499-eedb0b719f9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\ソース ファイル">
+      <UniqueIdentifier>{659ba10b-58c8-425d-8bc8-81a47301eb89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\ヘッダー ファイル">
+      <UniqueIdentifier>{7c7d54de-a7ee-49d2-bf28-36475208942d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ILTD-Engine\blending.h">
+      <Filter>Framework\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ILTD-Engine\blendingN.h">
+      <Filter>Framework\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ILTD-Engine\framework.h">
+      <Filter>Framework\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ILTD-Engine\geometric_primitive.h">
+      <Filter>Framework\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ILTD-Engine\high_resolution_timer.h">
+      <Filter>Framework\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ILTD-Engine\misc.h">
+      <Filter>Framework\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ILTD-Engine\shader.h">
+      <Filter>Framework\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ILTD-Engine\skinned_mesh.h">
+      <Filter>Framework\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ILTD-Engine\sprite.h">
+      <Filter>Framework\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ILTD-Engine\sprite_batch.h">
+      <Filter>Framework\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ILTD-Engine\static_mesh.h">
+      <Filter>Framework\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ILTD-Engine\texture.h">
+      <Filter>Framework\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\main.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\all.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\common.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ILTD-Engine\blending.cpp">
+      <Filter>Framework\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ILTD-Engine\blendingN.cpp">
+      <Filter>Framework\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ILTD-Engine\framework.cpp">
+      <Filter>Framework\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ILTD-Engine\geometric_primitive.cpp">
+      <Filter>Framework\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ILTD-Engine\main.cpp">
+      <Filter>Framework\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ILTD-Engine\shader.cpp">
+      <Filter>Framework\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ILTD-Engine\skinned_mesh.cpp">
+      <Filter>Framework\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ILTD-Engine\sprite.cpp">
+      <Filter>Framework\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ILTD-Engine\sprite_batch.cpp">
+      <Filter>Framework\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ILTD-Engine\static_mesh.cpp">
+      <Filter>Framework\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ILTD-Engine\texture.cpp">
+      <Filter>Framework\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="ILTD-Engine\sprite_ps.hlsl" />
+    <FxCompile Include="ILTD-Engine\sprite_vs.hlsl" />
+    <FxCompile Include="SourceCode\sprite_batch_vs.hlsl" />
+    <FxCompile Include="SourceCode\sprite_batch_ps.hlsl" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,68 @@
+# ===========================
+# Visual Studio / MSBuild
+# ===========================
+.vs/
+x64/
+x86/
+Debug/
+Release/
+build/
+*.user
+*.suo
+*.db
+*.opendb
+*.ipch
+*.aps
+*.ncb
+
+# ===========================
+# C++ Compiled Binaries
+# ===========================
+*.exe
+*.dll
+*.lib
+*.pdb
+*.ilk
+*.exp
+*.obj
+*.iobj
+*.ipdb
+
+# ===========================
+# Shader Compilation
+# ===========================
+# Exclude compiled shader objects
+*.cso
+# Keep shader source code!
+!*.hlsl
+!*.hlsli
+!*.fx
+
+# ===========================
+# Image Baking / Temporary
+# ===========================
+*.tlog
+*.log
+*.idb
+*.tmp
+
+# ===========================
+# OS Generated
+# ===========================
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# ===========================
+# Project Specific (Adjust as needed)
+# ===========================
+# If you want to ignore all images in Output, but keep them in Assets:
+# (Usually you DON'T ignore assets, so this is just a precaution)
+# *.png
+# *.jpg
+
+# FORCE include your source code folders if they ever get blocked
+!src/
+!include/
+!ILTD-Engine/
+!Data/
