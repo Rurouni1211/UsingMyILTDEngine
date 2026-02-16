@@ -141,6 +141,7 @@
     <ClInclude Include="ILTD-Engine\framework.h" />
     <ClInclude Include="ILTD-Engine\geometric_primitive.h" />
     <ClInclude Include="ILTD-Engine\high_resolution_timer.h" />
+    <ClInclude Include="ILTD-Engine\input.h" />
     <ClInclude Include="ILTD-Engine\misc.h" />
     <ClInclude Include="ILTD-Engine\shader.h" />
     <ClInclude Include="ILTD-Engine\skinned_mesh.h" />
@@ -149,14 +150,20 @@
     <ClInclude Include="ILTD-Engine\static_mesh.h" />
     <ClInclude Include="ILTD-Engine\texture.h" />
     <ClInclude Include="SourceCode\all.h" />
+    <ClInclude Include="SourceCode\BallSystem.h" />
     <ClInclude Include="SourceCode\common.h" />
+    <ClInclude Include="SourceCode\Game.h" />
+    <ClInclude Include="SourceCode\HoopController.h" />
+    <ClInclude Include="SourceCode\Leaderboard.h" />
     <ClInclude Include="SourceCode\main.h" />
+    <ClInclude Include="SourceCode\StageManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ILTD-Engine\blending.cpp" />
     <ClCompile Include="ILTD-Engine\blendingN.cpp" />
     <ClCompile Include="ILTD-Engine\framework.cpp" />
     <ClCompile Include="ILTD-Engine\geometric_primitive.cpp" />
+    <ClCompile Include="ILTD-Engine\input.cpp" />
     <ClCompile Include="ILTD-Engine\main.cpp" />
     <ClCompile Include="ILTD-Engine\shader.cpp" />
     <ClCompile Include="ILTD-Engine\skinned_mesh.cpp" />
