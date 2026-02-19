@@ -1,18 +1,26 @@
-#pragma once
+﻿#pragma once
 #include <cmath>
 #include "sprite.h"
 
 struct HoopController {
     sprite* hoop = nullptr;
-    float baseX = 980, baseY = 160;
+
+    float baseX = 980.0f;
+    float baseY = 160.0f;
     float t = 0.0f;
 
-    void Update(float dt, int stage) {
+    // ✅ add these
+    inline void SetHoop(sprite* s) { hoop = s; }
+    inline void Reset() { t = 0.0f; }
+
+    inline void Update(float dt, int stage) {
         if (!hoop) return;
 
         float x = baseX, y = baseY;
+
         if (stage >= 3) {
             t += dt;
+
             float speed = (stage == 3) ? 1.2f : 2.0f;
             float ampX = (stage == 3) ? 180.0f : 260.0f;
             float ampY = (stage == 4) ? 35.0f : 0.0f;

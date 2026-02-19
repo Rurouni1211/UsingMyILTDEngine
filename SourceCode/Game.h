@@ -1,105 +1,143 @@
-#pragma once
+﻿#pragma once
+
+#include <windows.h>
+#include <cmath>
+
 #include "framework.h"
 #include "sprite.h"
 #include "Input.h"
-#include "StageManager.h"
-#include "HoopController.h"
-#include "BallSystem.h"
-#include "Leaderboard.h"
 
-struct Game {
-    // screen
-    float W = 1280, H = 720;
+// Add these missing includes – adjust paths/filenames if needed
+#include "StageManager.h"     // defines StageManager
+#include "Leaderboard.h"      // defines Leaderboard
+#include "HoopController.h"   // defines HoopController
+#include "BallSystem.h"       // defines BallSystem
 
-    // sprites
-    sprite* player = nullptr;
-    sprite* hoop = nullptr;
+// Move clamp helper BEFORE Game struct so it's visible inside member functions
+static inline float G_Clamp(float v, float a, float b)
+{
+    return (v < a) ? a : (v > b) ? b : v;
+}
 
-    // systems
-    StageManager stages;
-    HoopController hoopCtrl;
-    BallSystem balls;
+struct Game
+{
+    float W = 1280.0f;
+    float H = 720.0f;
+
+    // systems – now compiler knows these types
+    StageManager stage;
     Leaderboard lb;
+    HoopController hoopCtrl;
+    BallSystem thrownBalls;           // renamed for clarity
 
-    // state
+    sprite* playerBall = nullptr;     // the ball you control/throw from
+    sprite* hoopSpr = nullptr;
+
+    float playerX = 200.0f;
+    float playerY = 560.0f;
+    float throwPower = 0.0f;
+    bool isCharging = false;
+
     int score = 0;
-    float playerX = 200, playerY = 560;
-
-    float charge = 0.0f;
-    bool charging = false;
 
     const char* lbPath = "leaderboard.txt";
 
-    void Init(framework& eng)
+    inline void Init(framework& eng, sprite* playerBallSprite, sprite* hoopSprite, const wchar_t* ballTex)
     {
+        playerBall = playerBallSprite;
+        hoopSpr = hoopSprite;
+
+        hoopCtrl.SetHoop(hoopSpr);
+        thrownBalls.SetHoop(hoopSpr);
+
+        thrownBalls.PreCreate(eng, ballTex);
+
         lb.Load(lbPath);
-
-        // hook references
-        hoopCtrl.hoop = hoop;
-        balls.SetHoop(hoop);
+        Reset();
     }
 
-    void SetSprites(sprite* p, sprite* h)
+    inline void Reset()
     {
-        player = p;
-        hoop = h;
-        hoopCtrl.hoop = hoop;
-        balls.SetHoop(hoop);
+        score = 0;
+        isCharging = false;
+        throwPower = 0.0f;
+        stage.stage = 1;
+        hoopCtrl.Reset();
+        thrownBalls.Reset();
+
+        if (playerBall)
+        {
+            playerX = 200.0f;
+            playerY = 560.0f;
+            playerBall->movex = playerX;
+            playerBall->movey = playerY;
+            playerBall->visible = true;
+        }
     }
 
-    void Update(float dt, Input& input, framework& eng)
+    inline void Update(float dt, Input& input, framework& eng)
     {
-        // player move
-        if (player) {
-            float speed = 500.0f;
-            if (input.Down(Input::PAD_LEFT))  playerX -= speed * dt;
-            if (input.Down(Input::PAD_RIGHT)) playerX += speed * dt;
-            playerX = clampf(playerX, 40.0f, W - 40.0f);
+        if (GetAsyncKeyState('R') & 0x8000) Reset();
 
-            player->movex = playerX;
-            player->movey = playerY;
+        stage.UpdateFromScore(score);
+
+        // Move player ball left/right
+        if (playerBall)
+        {
+            if (input.Down(Input::PAD_LEFT))  playerX -= 400.0f * dt;
+            if (input.Down(Input::PAD_RIGHT)) playerX += 400.0f * dt;
+            playerX = G_Clamp(playerX, 40.0f, W - 40.0f);
+
+            playerBall->movex = playerX;
+            playerBall->movey = playerY;
         }
 
-        // hoop move
-        stages.UpdateFromScore(score);
-        hoopCtrl.Update(dt, stages.stage);
+        // Hoop movement
+        hoopCtrl.Update(dt, stage.stage);
 
-        // shoot (fallback to VK_SPACE if you want)
-        bool spaceDown = (GetAsyncKeyState(VK_SPACE) & 0x8000) != 0;
+        // Charging & throwing
+        bool space = (GetAsyncKeyState(VK_SPACE) & 0x8000) != 0;
 
-        if (spaceDown) {
-            charging = true;
-            charge += dt;
-            charge = clampf(charge, 0.0f, 1.2f);
+        if (space)
+        {
+            isCharging = true;
+            throwPower += dt * 1.5f;
+            throwPower = G_Clamp(throwPower, 0.0f, 1.2f);
         }
-        else {
-            if (charging) {
-                charging = false;
-                float power = clampf(charge / 1.2f, 0.15f, 1.0f);
-                charge = 0.0f;
+        else if (isCharging)
+        {
+            isCharging = false;
 
-                float vx = 600.0f + 700.0f * power;
-                float vy = -900.0f - 900.0f * power;
+            float power = G_Clamp(throwPower, 0.2f, 1.0f);
+            float vx = 550.0f + 750.0f * power;
+            float vy = -800.0f - 1100.0f * power;
 
-                balls.Spawn(
-                    eng,
-                    playerX, playerY - 35.0f,
-                    vx, vy,
-                    L"R:\\projects\\C++\\EngineTest\\EngineTestAgain\\Data\\sprite\\ball.png",
-                    2 // base sprite slot for balls
-                );
+            thrownBalls.Spawn(playerX, playerY - 20.0f, vx, vy);
+
+            throwPower = 0.0f;
+        }
+
+        // Update thrown balls & scoring
+        int newScores = thrownBalls.Update(dt, W, H);
+        score += newScores * 2;
+
+        // Charging visual feedback
+        if (playerBall)
+        {
+            if (isCharging)
+            {
+                float pulse = 1.0f + 0.15f * sinf(GetTickCount() * 0.02f);
+                playerBall->r = pulse;
+                playerBall->g = pulse;
+                playerBall->b = 1.0f;
+            }
+            else
+            {
+                playerBall->r = playerBall->g = playerBall->b = 1.0f;
             }
         }
 
-        // balls update + scoring
-        int newScores = balls.Update(dt, W, H);
-        if (newScores > 0) {
-            score += newScores;
-            stages.UpdateFromScore(score);
-        }
-
-        // leaderboard save
-        lb.Submit(stages.stage, score);
+        lb.Submit(stage.stage, score);
         lb.Save(lbPath);
     }
 };
